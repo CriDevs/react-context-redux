@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {FC} from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {SignUp} from './pages/SignUp'
+import {ShowData} from './pages/ShowData'
+import { Context } from './contexts/Context';
+import { useContext } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App:FC = () =>{
+  const {state,dispatch} = useContext(Context)
+
+  const handleChangeTheme = () =>{
+    if(state.theme.status === 'light'){
+      dispatch({
+        type : 'CHANGE_STATUS',
+        payload : {
+          status: 'dark'
+        }
+      })
+    } else {
+      dispatch({
+        type : 'CHANGE_STATUS',
+        payload : {
+          status: 'light'
+        }
+    })
+    
+  }
+ 
 }
-
+return(
+  <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<SignUp/>}/>
+      <Route path='/exibir' element={<ShowData/>}/>
+    </Routes>
+  </BrowserRouter>
+)
+}
 export default App;
